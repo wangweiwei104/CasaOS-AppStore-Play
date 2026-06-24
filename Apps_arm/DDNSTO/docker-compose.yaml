@@ -1,0 +1,45 @@
+name: ddnsto-arm
+services:
+  ddnsto:
+    cpu_shares: 90
+    command: []
+    container_name: ddnsto
+    deploy:
+      resources:
+        limits:
+          memory: 981M
+    environment:
+      - DEVICE_NAME=wky
+      - TOKEN=XXXXX-XXXX-XXXX-XXXX-XXXXXXXX
+    hostname: ddnsto
+    image: linkease/ddnsto:latest
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/DDNSTO/icon.png
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+    ports: []
+    devices: []
+    cap_add: []
+    network_mode: host
+    privileged: false
+x-casaos:
+  author: self
+  category: self
+  hostname: web.ddnsto.com/app/#/devices
+  description:
+    en_us: DDNSTO is an intranet traversal tool that allows for custom installation, allowing users to modify it with your own TOKEN
+    zh_cn: DDNSTO 是一款内网穿透工具,使用自定义安装,修改为自己的TOKEN
+  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/DDNSTO/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/DDNSTO/screenshot-1.png       # 请替换为实际截图
+  index: /
+  is_uncontrolled: false
+  port_map: ""
+  scheme: https
+  store_app_id: ddnsto
+  title:
+    custom: DDNSTO
+    en_us: ddnsto

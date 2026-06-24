@@ -1,0 +1,46 @@
+name: one-kvm-full-arm
+services:
+  one-kvm-full:
+    cpu_shares: 90
+    command: []
+    container_name: one-kvm
+    deploy:
+      resources:
+        limits:
+          memory: 981M
+    hostname: one-kvm
+    image: registry.cn-hangzhou.aliyuncs.com/silentwind/one-kvm-full:latest
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/OneKVM/icon.png
+    privileged: true
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: /dev
+        target: /dev
+      - type: bind
+        source: /sys
+        target: /sys
+    ports: []
+    devices: []
+    cap_add: []
+    environment: []
+    network_mode: host
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  description:
+    en_us: An open and lightweight IP-KVM solution written in Rust, enabling BIOS-level remote management
+    zh_cn: Rust 编写的开放轻量 IP-KVM 解决方案，实现 BIOS 级远程管理
+  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/OneKVM/icon.png
+  index: /
+  is_uncontrolled: false
+  port_map: "8080"
+  scheme: http
+  store_app_id: yourprojectname
+  title:
+    custom: One-KVM
+    en_us: one-kvm-full

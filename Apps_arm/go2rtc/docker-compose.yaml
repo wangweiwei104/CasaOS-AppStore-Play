@@ -1,0 +1,41 @@
+name: go2rtc-arm
+services:
+  go2rtc:
+    cpu_shares: 90
+    command: []
+    container_name: go2rtc
+    deploy:
+      resources:
+        limits:
+          memory: 981M
+    environment:
+      - TZ=Asia/Shanghai
+    hostname: go2rtc
+    image: alexxit/go2rtc:latest
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/go2rtc/icon.png
+    privileged: true
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/go2rtc/config
+        target: /config
+    ports: []
+    devices: []
+    cap_add: []
+    network_mode: host
+x-casaos:
+  author: self
+  category: self
+  description:
+    en_us: Ultimate camera streaming application
+    zh_cn: 轻量级终极摄像头流媒体解决方案
+  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/go2rtc/icon.png
+  index: ""
+  is_uncontrolled: false
+  port_map: "1984"
+  scheme: http
+  store_app_id: go2rtc
+  title:
+    custom: go2rtc
+    en_us: go2rtc

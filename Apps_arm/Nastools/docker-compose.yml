@@ -16,7 +16,7 @@ services:
       UMASK: "000"
       NASTOOL_AUTO_UPDATE: "false"
       NASTOOL_CN_UPDATE: "false"
-      TZ: $TZ
+      TZ: Asia/Shanghai
     volumes:
       - type: bind
         source: /DATA/AppData/nastool/config
@@ -31,7 +31,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 64M
+          memory: 981M
     x-casaos:
       envs:
         - container: PUID

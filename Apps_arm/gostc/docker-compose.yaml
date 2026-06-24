@@ -1,0 +1,43 @@
+name: gostc-arm
+services:
+  client:
+    cpu_shares: 90
+    command:
+      - --tls=true
+      - -addr
+      - gost.sian.one
+      - -key
+      - 0dc1490c-9c5c-40cd-8cc1-4066d9599e6e
+    container_name: gostc
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    hostname: gostc
+    image: sianhh/gostc:latest
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
+    restart: unless-stopped
+    ports: []
+    volumes: []
+    devices: []
+    cap_add: []
+    environment: []
+    network_mode: host
+    privileged: false
+x-casaos:
+  author: self
+  category: self
+  hostname: gost.sian.one/dashboard
+  description:
+    en_us: Intranet traversal developed based on FRP
+    zh_cn: 基于FRP开发的内网穿透
+  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
+  index: /
+  is_uncontrolled: false
+  port_map: ""
+  scheme: https
+  store_app_id: gostc-arm
+  title:
+    custom: GOSTC
+    en_us: client

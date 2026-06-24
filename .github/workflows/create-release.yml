@@ -69,29 +69,42 @@ jobs:
 
           # Build arm
           if [ -d "./Apps_arm" ]; then
-            # 创建临时目录
-            mkdir -p ./temp_arm
+            # 创建临时目录用于存放最终要打包的文件
+            mkdir -p ./temp_arm/Apps
             
-            # 1. 复制 Apps_arm 中的所有 yml 文件到临时目录
-            find ./Apps_arm -type f -name "*.yml" | cpio -pdm ./temp_arm
+            # 1. 先复制Apps_arm中的所有yml文件（优先），保持目录结构
+            rsync -av --include='*.yml' --exclude='*' ./Apps_arm/ ./temp_arm/Apps/
             
-            # 2. 从原 Apps 中找出架构为 arm 的 yml 文件，复制到临时目录
-            # 注意：cpio 会自动跳过已存在的文件
-            find ./Apps -type f -name "*.yml" -exec grep -lPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \; | cpio -pdm ./temp_arm
+            # 2. 从原Apps中找出架构为arm的应用
+            mapfile -t arm_apps < <(find ./Apps -type f -name "*.yml" -exec grep -lPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \;)
             
-            # 3. 复制根目录的 json 文件到临时目录的根部
+            # 3. 检查每个arm应用是否已存在于temp_arm/Apps中，保持目录结构
+            for app in "${arm_apps[@]}"; do
+              # 获取相对路径（去掉./Apps/前缀）
+              rel_path="${app#./Apps/}"
+              # 目标文件路径
+              dest_path="./temp_arm/Apps/$rel_path"
+              # 如果目标文件不存在，则复制过去
+              if [ ! -f "$dest_path" ]; then
+                # 创建目标目录
+                mkdir -p "$(dirname "$dest_path")"
+                cp -f "$app" "$dest_path"
+              fi
+            done
+            
+            # 4. 复制根目录的json文件
             cp -f ./*.json ./temp_arm/ 2>/dev/null || true
             
-            # 4. 打包临时目录中的内容
+            # 5. 打包临时目录中的内容（保持目录结构）
             (cd ./temp_arm && zip -r ../AppStore_arm.zip .)
             
-            # 5. 统计数量
-            arm_count=$(find ./temp_arm -type f -name "*.yml" | wc -l)
+            # 6. 统计数量（只统计yml文件）
+            arm_count=$(find ./temp_arm/Apps -type f -name "*.yml" | wc -l)
             
-            # 6. 清理
+            # 7. 清理临时目录
             rm -rf ./temp_arm
           else
-            # 如果没有 Apps_arm 目录，使用原逻辑
+            # 如果没有Apps_arm目录，使用原逻辑
             zip AppStore_arm.zip $(find . -maxdepth 1 -type f -name "*.json" && find . -type f -wholename "./Apps/*.yml" -exec grep -rlPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \;)
             arm_count=$(find . -type f -wholename "./Apps/*.yml" -exec grep -rlPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \; | wc -l)
           fi

@@ -68,9 +68,50 @@ jobs:
           universal_count=$(find ./Apps/ -name "*.yml" | wc -l)
 
           # Build arm
-          [ -d "./Apps_arm" ] && cp -rfu ./Apps_arm/*   ./Apps/
-          zip AppStore_arm.zip   $(find . -type f -wholename "./*.json" && find . -type f -wholename "./Apps/*.yml" -exec grep -rlPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \;)
-          arm_count=$(find . -type f -wholename "./Apps/*.yml" -exec grep -rlPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \; | wc -l)
+          if [ -d "./Apps_arm" ]; then
+            # 先复制 Apps_arm 中的所有应用（覆盖原 Apps 中的同名应用）
+            cp -rfu ./Apps_arm/* ./Apps/
+            
+            # 获取所有已复制的 arm 应用（来自 Apps_arm）
+            arm_from_arm_dir=$(find ./Apps_arm -type f -name "*.yml")
+            
+            # 获取原 Apps 中所有架构为 arm 的应用
+            arm_from_main_dir=$(find ./Apps -type f -name "*.yml" -exec grep -rlPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \;)
+            
+            # 合并两个列表，去重（优先使用 Apps_arm 中的）
+            # 使用关联数组记录哪些应用已经在 Apps_arm 中出现过
+            declare -A seen_apps
+            selected_apps=""
+            
+            # 先处理 Apps_arm 中的应用
+            for app in $arm_from_arm_dir; do
+              app_name=$(basename "$app")
+              if [ -z "${seen_apps[$app_name]}" ]; then
+                seen_apps[$app_name]=1
+                selected_apps="$selected_apps $app"
+              fi
+            done
+            
+            # 再处理原 Apps 中的应用，跳过已在 Apps_arm 中的应用
+            for app in $arm_from_main_dir; do
+              app_name=$(basename "$app")
+              if [ -z "${seen_apps[$app_name]}" ]; then
+                seen_apps[$app_name]=1
+                selected_apps="$selected_apps $app"
+              fi
+            done
+            
+            # 打包所有选中的应用 + 根目录的 json 文件
+            zip AppStore_arm.zip $(find . -maxdepth 1 -type f -name "*.json") $selected_apps
+            
+            # 统计数量
+            arm_count=$(echo "$selected_apps" | wc -w)
+          else
+            # 如果没有 Apps_arm 目录，使用原逻辑
+            zip AppStore_arm.zip $(find . -maxdepth 1 -type f -name "*.json" && find . -type f -wholename "./Apps/*.yml" -exec grep -rlPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \;)
+            arm_count=$(find . -type f -wholename "./Apps/*.yml" -exec grep -rlPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \; | wc -l)
+          fi
+
           git checkout -- ./Apps && git clean -df ./Apps
 
           # Build arm64

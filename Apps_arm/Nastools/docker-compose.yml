@@ -19,17 +19,11 @@ services:
       TZ: $TZ
     volumes:
       - type: bind
-        source: /DATA/AppData/emby-arm/nastool/config
+        source: /DATA/AppData/nastool/config
         target: /config
       - type: bind
         source: /media
         target: /media
-    extra_hosts:
-      - "api.themoviedb.org:13.225.103.45"
-      - "api.themoviedb.org:13.224.167.10"
-      - "www.themoviedb.org:13.225.103.6"
-      - "image.tmdb.org:84.17.38.232"
-      - "webservice.fanart.tv:51.89.210.79"
     logging:
       driver: json-file
       options:

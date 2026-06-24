@@ -73,7 +73,14 @@ jobs:
             mkdir -p ./temp_arm/Apps
             
             # 1. 先复制Apps_arm中的所有yml文件（优先），保持目录结构
-            rsync -av --include='*.yml' --exclude='*' ./Apps_arm/ ./temp_arm/Apps/
+            find ./Apps_arm -type f -name "*.yml" | while read -r file; do
+              # 获取相对路径（去掉./Apps_arm/前缀）
+              rel_path="${file#./Apps_arm/}"
+              # 创建目标目录
+              mkdir -p "./temp_arm/Apps/$(dirname "$rel_path")"
+              # 复制文件
+              cp -f "$file" "./temp_arm/Apps/$(dirname "$rel_path")/"
+            done
             
             # 2. 从原Apps中找出架构为arm的应用
             mapfile -t arm_apps < <(find ./Apps -type f -name "*.yml" -exec grep -lPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- arm\s*\n' {} \;)

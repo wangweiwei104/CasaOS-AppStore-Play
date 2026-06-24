@@ -1,0 +1,81 @@
+name: nas-tools
+services:
+  nas-tools:
+    container_name: nas-tools
+    hostname: nas-tools
+    image: hosiang1026/nastool_arm32v7:2.1.0
+    restart: always
+    network_mode: bridge
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    environment:
+      PUID: "0"
+      PGID: "0"
+      UMASK: "000"
+      NASTOOL_AUTO_UPDATE: "false"
+      NASTOOL_CN_UPDATE: "false"
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/emby-arm/nastool/config
+        target: /config
+      - type: bind
+        source: /media
+        target: /media
+    extra_hosts:
+      - "api.themoviedb.org:13.225.103.45"
+      - "api.themoviedb.org:13.224.167.10"
+      - "www.themoviedb.org:13.225.103.6"
+      - "image.tmdb.org:84.17.38.232"
+      - "webservice.fanart.tv:51.89.210.79"
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    x-casaos:
+      envs:
+        - container: PUID
+          description: { en_us: "User ID" }
+        - container: PGID
+          description: { en_us: "Group ID" }
+        - container: TZ
+          description: { en_us: "Timezone" }
+        - container: NASTOOL_AUTO_UPDATE
+          description: { en_us: "Auto update switch" }
+        - container: NASTOOL_CN_UPDATE
+          description: { en_us: "CN mirror update switch" }
+      ports:
+        - container: "3000"
+          description: { en_us: "Web UI Port" }
+      volumes:
+        - container: /config
+          description: { en_us: "Config storage" }
+        - container: /media
+          description: { en_us: "Media library directory" }
+
+x-casaos:
+  architectures:
+    - arm
+  main: nas-tools
+  author: Custom
+  category: Media
+  description:
+    en_us: NAS media management tool for automated organization, renaming and metadata scraping (Arm32).
+    zh_cn: NAS媒体库资源归集、整理自动化工具(Arm32版)
+  developer: hosiang1026
+  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/Nastools/icon.png # 请替换为实际图标 URL
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/Nastools/screenshot-1.png       # 请替换为实际截图
+    - https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/Nastools/screenshot-2.png
+  thumbnail: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/Nastools/thumbnail.png    # 请替换为实际缩略图
+  tips: {}
+  title:
+    en_us: NASTool
+  index: /
+  port_map: "3000"

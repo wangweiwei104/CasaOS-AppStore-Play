@@ -85,9 +85,6 @@ jobs:
           amd64_count=$(find . -type f -wholename "./Apps/*.yml" -exec grep -rlPz 'x-casaos:\s*\n\s*architectures:[\n\s\w-#]*- amd64\s*\n' {} \; | wc -l)
 
           echo "app_counts=universal($universal_count), arm($arm_count), arm64($arm64_count), amd64($amd64_count)" >> $GITHUB_OUTPUT
-
-          # Proxy get.docker.com
-          wget https://get.docker.com -O get_docker.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -106,38 +103,3 @@ jobs:
           body: "## What's Changed\n\n${{ steps.get_commit_messages.outputs.commits }}\n\n📊 **App Counts:** ${{ steps.create_release.outputs.app_counts }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload to OSS
-        id: upload_to_oss
-        uses: tvrcgo/upload-to-oss@master
-        with:
-          key-id: ${{ secrets.OSS_KEY_ID }}
-          key-secret: ${{ secrets.OSS_KEY_SECRET }}
-          endpoint: ${{ secrets.OSS_ENDPOINT }}
-          bucket: ${{ secrets.OSS_BUCKET }}
-          assets: |
-            AppStore.zip:Cp0204-AppStore-Play.zip
-            AppStore_arm.zip:Cp0204-AppStore-Play-arm.zip
-            AppStore_arm64.zip:Cp0204-AppStore-Play-arm64.zip
-            AppStore_amd64.zip:Cp0204-AppStore-Play-amd64.zip
-            get_docker.sh:get_docker.sh
-            Tools/get_casaos.sh:get_casaos.sh
-            Tools/casaos_newbie.sh:casaos_newbie.sh
-            Tools/YAML-Generator.html:generate/index.html
-
-      - name: Cloudflare Purge Cached
-        run: |
-          # Cloudflare Purge Cached
-          # https://developers.cloudflare.com/api/operations/zone-purge#purge-cached-content-by-url
-          response=$(curl --silent --request POST \
-            --url https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache \
-            --header 'Content-Type: application/json' \
-            --header 'X-Auth-Email: ${{ secrets.CLOUDFLARE_EMAIL }}' \
-            --header 'X-Auth-Key: ${{ secrets.CLOUDFLARE_API_KEY }}' \
-            --data '{"purge_everything": true}')
-          if echo "$response" | grep -q '"success":false'; then
-            echo "Cloudflare Purge Cached Failed: $response"
-            exit 1
-          else
-            echo "Cloudflare Purge Cached Success."
-          fi

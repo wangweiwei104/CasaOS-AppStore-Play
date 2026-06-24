@@ -26,10 +26,13 @@ services:
     network_mode: host
     privileged: false
 x-casaos:
-  author: self
-  category: self
+  author: WW
+  category: Network
   hostname: gost.sian.one/dashboard
   description:
+    en_us: Intranet traversal developed based on FRP
+    zh_cn: 基于FRP开发的内网穿透
+  tagline:
     en_us: Intranet traversal developed based on FRP
     zh_cn: 基于FRP开发的内网穿透
   icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
@@ -40,4 +43,4 @@ x-casaos:
   store_app_id: gostc-arm
   title:
     custom: GOSTC
-    en_us: client
+    en_us: GOSTC

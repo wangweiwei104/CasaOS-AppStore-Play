@@ -25,9 +25,12 @@ services:
     cap_add: []
     network_mode: host
 x-casaos:
-  author: self
-  category: self
+  author: WW
+  category: Home Automation
   description:
+    en_us: Ultimate camera streaming application
+    zh_cn: 轻量级终极摄像头流媒体解决方案
+  tagline:
     en_us: Ultimate camera streaming application
     zh_cn: 轻量级终极摄像头流媒体解决方案
   icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/go2rtc/icon.png

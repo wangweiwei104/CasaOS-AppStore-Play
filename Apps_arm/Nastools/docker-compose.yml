@@ -57,11 +57,14 @@ x-casaos:
   architectures:
     - arm
   main: nas-tools
-  author: Custom
+  author: WW
   category: Media
   description:
-    en_us: NAS media management tool for automated organization, renaming and metadata scraping (Arm32).
-    zh_cn: NAS媒体库资源归集、整理自动化工具(Arm32版)
+    en_us: NAS media management tool for automated organization, renaming and metadata scraping v2.1.0 (Arm32).
+    zh_cn: NAS媒体库资源归集、整理自动化工具 v2.1.0 (Arm32版)
+  tagline:
+    en_us: NAS media management tool
+    zh_cn: NAS媒体库资源归集、整理自动化工具
   developer: hosiang1026
   icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/Nastools/icon.png # 请替换为实际图标 URL
   screenshot_link:

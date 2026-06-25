@@ -1,8 +1,8 @@
 name: gostc-arm
 services:
-  client:
-    container_name: gostc
-    hostname: gostc
+  gostc-arm:
+    container_name: gostc-arm
+    hostname: gostc-arm
     image: sianhh/gostc:latest
     restart: unless-stopped
     network_mode: host
@@ -59,7 +59,7 @@ services:
 x-casaos:
   architectures:
     - arm
-  main: client
+  main: gostc-arm
   author: WW
   category: Network
   description:
@@ -80,6 +80,5 @@ x-casaos:
     zh_cn: GOSTC 内网穿透
   index: /
   hostname: gost.sian.one/dashboard
-  store_app_id: gostc-arm
   port_map: ""
   is_uncontrolled: false

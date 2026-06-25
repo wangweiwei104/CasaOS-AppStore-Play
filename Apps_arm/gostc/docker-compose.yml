@@ -33,25 +33,25 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: Container timezone setting
-            zh_cn: 容器时区设置
+            en_us: "Container timezone setting"
+            zh_cn: "容器时区设置"
         - container: GOST_TLS
           description:
-            en_us: Enable TLS encryption (true/false)
-            zh_cn: 启用 TLS 加密 (true/false)
+            en_us: "Enable TLS encryption (true/false)"
+            zh_cn: "启用 TLS 加密 (true/false)"
         - container: GOST_ADDR
           description:
-            en_us: GOST Server address (e.g., gost.sian.one)
+            en_us: "GOST Server address (e.g., gost.sian.one)"
             zh_cn: "GOST 服务器地址 (例如: gost.sian.one)"
         - container: GOST_KEY
           description:
-            en_us: Client authentication key (required)
-            zh_cn: 客户端认证 Key (必填)
+            en_us: "Client authentication key (required)"
+            zh_cn: "客户端认证 Key (必填)"
       ports: []
       volumes: []
       tips:
-        en_us: Modify the GOST_ADDR and GOST_KEY to match your server settings. Click the icon to open the server dashboard.
-        zh_cn: 请修改 GOST_ADDR 和 GOST_KEY 以匹配你的服务端设置。点击图标可打开服务器仪表盘。
+        en_us: "Modify the GOST_ADDR and GOST_KEY to match your server settings. Click the icon to open the server dashboard."
+        zh_cn: "请修改 GOST_ADDR 和 GOST_KEY 以匹配你的服务端设置。点击图标可打开服务器仪表盘。"
 
 x-casaos:
   architectures:
@@ -60,8 +60,8 @@ x-casaos:
   author: WW
   category: Network
   description:
-    en_us: GOSTC is an intranet traversal client developed based on FRP, providing secure and stable tunnel connections to your private network.
-    zh_cn: GOSTC 是一款基于 FRP 开发的内网穿透客户端，为您的私有网络提供安全稳定的隧道连接。
+    en_us: "GOSTC is an intranet traversal client developed based on FRP, providing secure and stable tunnel connections to your private network."
+    zh_cn: "GOSTC 是一款基于 FRP 开发的内网穿透客户端，为您的私有网络提供安全稳定的隧道连接。"
   developer: sianhh
   icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
   screenshot_link: []

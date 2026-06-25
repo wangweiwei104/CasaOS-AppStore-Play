@@ -1,46 +1,85 @@
 name: gostc-arm
 services:
   client:
-    cpu_shares: 90
-    command:
-      - --tls=true
-      - -addr
-      - gost.sian.one
-      - -key
-      - 0dc1490c-9c5c-40cd-8cc1-4066d9599e6e
     container_name: gostc
+    hostname: gostc
+    image: sianhh/gostc:latest
+    restart: unless-stopped
+    network_mode: host
+    privileged: false
+    cpu_shares: 90
+    
+    # 定义环境变量，赋予默认值（来自你的原配置）
+    environment:
+      TZ: Asia/Shanghai
+      GOST_TLS: "true"
+      GOST_ADDR: gost.sian.one
+      GOST_KEY: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxxx
+    
+    # 引用环境变量来构建启动命令
+    command:
+      - --tls=${GOST_TLS}
+      - -addr
+      - ${GOST_ADDR}
+      - -key
+      - ${GOST_KEY}
+    
+    volumes: []
     deploy:
       resources:
         limits:
           memory: 256M
-    hostname: gostc
-    image: sianhh/gostc:latest
     labels:
-      icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
-    restart: unless-stopped
-    ports: []
-    volumes: []
-    devices: []
-    cap_add: []
-    environment: []
-    network_mode: host
-    privileged: false
+      org.opencontainers.image.icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
+    
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_us: Container timezone setting
+            zh_cn: 容器时区设置
+        - container: GOST_TLS
+          description:
+            en_us: Enable TLS encryption (true/false)
+            zh_cn: 启用 TLS 加密 (true/false)
+        - container: GOST_ADDR
+          description:
+            en_us: GOST Server address (e.g., gost.sian.one)
+            zh_cn: GOST 服务器地址 (例如: gost.sian.one)
+        - container: GOST_KEY
+          description:
+            en_us: Client authentication key (required)
+            zh_cn: 客户端认证 Key (必填)
+      ports: []
+      volumes: []
+      tips:
+        en_us: Modify the GOST_ADDR and GOST_KEY to match your server settings. Click the icon to open the server dashboard.
+        zh_cn: 请修改 GOST_ADDR 和 GOST_KEY 以匹配你的服务端设置。点击图标可打开服务器仪表盘。
+
 x-casaos:
+  architectures:
+    - arm
+  main: client
   author: WW
   category: Network
-  hostname: gost.sian.one/dashboard
   description:
-    en_us: Intranet traversal developed based on FRP
-    zh_cn: 基于FRP开发的内网穿透
-  tagline:
-    en_us: Intranet traversal developed based on FRP
-    zh_cn: 基于FRP开发的内网穿透
+    en_us: GOSTC is an intranet traversal client developed based on FRP, providing secure and stable tunnel connections to your private network.
+    zh_cn: GOSTC 是一款基于 FRP 开发的内网穿透客户端，为您的私有网络提供安全稳定的隧道连接。
+  developer: sianhh
   icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
-  index: /
-  is_uncontrolled: false
-  port_map: ""
-  scheme: https
-  store_app_id: gostc-arm
+  screenshot_link: []
+  tagline:
+    en_us: Intranet traversal client (FRP-based)
+    zh_cn: 基于 FRP 的内网穿透客户端
+  thumbnail: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
+  tips:
+    en_us: "Running in Host mode. Configuration is managed via Environment Variables."
+    zh_cn: "运行于 Host 模式。配置现已支持通过环境变量在 UI 中修改。"
   title:
-    custom: GOSTC
     en_us: GOSTC
+    zh_cn: GOSTC 内网穿透
+  index: /
+  hostname: gost.sian.one/dashboard
+  store_app_id: gostc-arm
+  port_map: ""
+  is_uncontrolled: false

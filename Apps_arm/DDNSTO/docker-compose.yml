@@ -1,9 +1,9 @@
 name: ddnsto-arm
 services:
-  ddnsto:
+  ddnsto-arm:
     cpu_shares: 90
     command: []
-    container_name: ddnsto
+    container_name: ddnsto-arm
     deploy:
       resources:
         limits:
@@ -11,7 +11,7 @@ services:
     environment:
       - DEVICE_NAME=wky
       - TOKEN=XXXXX-XXXX-XXXX-XXXX-XXXXXXXX
-    hostname: ddnsto
+    hostname: ddnsto-arm
     image: linkease/ddnsto:latest
     labels:
       icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/DDNSTO/icon.png
@@ -28,6 +28,7 @@ services:
 x-casaos:
   architectures:
     - arm
+  main: ddnsto-arm
   author: WW
   category: Network
   hostname: web.ddnsto.com/app/#/devices

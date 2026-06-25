@@ -1,44 +1,66 @@
 name: go2rtc-arm
 services:
   go2rtc:
-    cpu_shares: 90
-    command: []
     container_name: go2rtc
-    deploy:
-      resources:
-        limits:
-          memory: 981M
-    environment:
-      - TZ=Asia/Shanghai
     hostname: go2rtc
     image: alexxit/go2rtc:latest
-    labels:
-      icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/go2rtc/icon.png
-    privileged: true
     restart: unless-stopped
+    network_mode: host
+    privileged: true
+    cpu_shares: 90
+    command: []
+    environment:
+      TZ: Asia/Shanghai
     volumes:
       - type: bind
         source: /DATA/AppData/go2rtc/config
         target: /config
-    ports: []
-    devices: []
-    cap_add: []
-    network_mode: host
+    deploy:
+      resources:
+        limits:
+          memory: 981M
+    labels:
+      org.opencontainers.image.icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/go2rtc/icon.png
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_us: Container timezone setting
+            zh_cn: 容器时区设置
+      ports: []
+      volumes:
+        - container: /config
+          description:
+            en_us: Configuration directory for go2rtc.yaml
+            zh_cn: go2rtc.yaml 配置文件目录
+      webui:
+        scheme: http
+        port: 1984
+
 x-casaos:
+  architectures:
+    - arm
+  main: go2rtc
   author: WW
   category: Home Automation
   description:
-    en_us: Ultimate camera streaming application
-    zh_cn: 轻量级终极摄像头流媒体解决方案
+    en_us: Ultimate camera streaming application with support for RTSP, WebRTC, MSE, HLS and MP4 formats. Perfect for Home Assistant integrations.
+    zh_cn: 轻量级终极摄像头流媒体解决方案，支持 RTSP, WebRTC, MSE, HLS 和 MP4 格式，完美对接 Home Assistant。
+  developer: AlexxIT
+  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/go2rtc/icon.png
+  screenshot_link: []
   tagline:
     en_us: Ultimate camera streaming application
     zh_cn: 轻量级终极摄像头流媒体解决方案
-  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/go2rtc/icon.png
-  index: ""
-  is_uncontrolled: false
-  port_map: "1984"
-  scheme: http
-  store_app_id: go2rtc
+  thumbnail: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/go2rtc/icon.png
+  tips:
+    en_us: Running in Host mode. Access WebUI at port 1984. Edit /config/go2rtc.yaml to add your camera streams. Privileged mode is used for potential USB camera access.
+    zh_cn: 运行于 Host 网络模式，请访问 1984 端口。编辑 /config/go2rtc.yaml 添加摄像头流。特权模式用于潜在的 USB 摄像头访问需求。
   title:
-    custom: go2rtc
     en_us: go2rtc
+    zh_cn: go2rtc 流媒体服务
+    custom: go2rtc
+  index: /
+  hostname: ""
+  port_map: "1984"
+  is_uncontrolled: false

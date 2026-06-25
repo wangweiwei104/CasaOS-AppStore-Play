@@ -27,21 +27,21 @@ x-casaos:
   author: WW
   category: Network
   description:
-    en_us: GOSTC is a simple wrapper client for the GOST tunnel.
-    zh_cn: GOSTC 是一个简单的 GOST 隧道客户端。
+    en_us: GOSTC is an intranet traversal client developed based on FRP, providing secure and stable tunnel connections to your private network. Please modify the command parameters to set your own server address and key.https://docs.sian.one/
+    zh_cn: GOSTC 是一款基于 FRP 开发的内网穿透客户端，为您的私有网络提供安全稳定的隧道连接。请使用自定义安装修改命令参数（command）以设置你自己的服务器地址和密钥。https://docs.sian.one/
   developer: sianhh
   icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
   screenshot_link: []
   tagline:
-    en_us: GOST tunnel client
-    zh_cn: GOST 隧道客户端
+    en_us: Intranet traversal client (FRP-based)
+    zh_cn: 基于 FRP 的内网穿透客户端
   thumbnail: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
   tips:
     en_us: Please modify the command parameters to set your own server address and key.
     zh_cn: 请修改命令参数（command）以设置你自己的服务器地址和密钥。
   title:
     en_us: GOSTC
-    zh_cn: GOSTC
+    zh_cn: GOSTC 内网穿透
   index: /
   hostname: gost.sian.one/dashboard
   scheme: https

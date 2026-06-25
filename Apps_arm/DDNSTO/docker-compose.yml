@@ -35,14 +35,14 @@ x-casaos:
   description:
     en_us: DDNSTO is an intranet traversal tool that allows for custom installation, allowing users to modify it with your own TOKEN
     zh_cn: DDNSTO 是一款内网穿透工具,使用自定义安装,修改为自己的TOKEN
+  tagline:
+    en_us: DDNSTO is an intranet traversal tool
+    zh_cn: 一款内网穿透工具
   icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/DDNSTO/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/DDNSTO/screenshot-1.png       # 请替换为实际截图
   index: /
   is_uncontrolled: false
   port_map: ""
-  scheme: https
-  store_app_id: ddnsto
   title:
-    custom: DDNSTO
-    en_us: ddnsto
+    en_us: DDNSTO

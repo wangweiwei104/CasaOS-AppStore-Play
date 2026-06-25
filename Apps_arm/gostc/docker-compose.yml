@@ -1,8 +1,8 @@
-name: gostc-arm
+name: gostc
 services:
-  gostc-arm:
-    container_name: gostc-arm
-    hostname: gostc-arm
+  gostc:
+    container_name: gostc
+    hostname: gostc
     image: sianhh/gostc:latest
     restart: unless-stopped
     network_mode: host
@@ -56,7 +56,7 @@ services:
 x-casaos:
   architectures:
     - arm
-  main: gostc-arm
+  main: gostc
   author: WW
   category: Network
   description:

@@ -61,8 +61,8 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
   screenshot_link: []
   tagline:
-    en_us: Intranet traversal client (FRP-based)
-    zh_cn: 基于 FRP 的内网穿透客户端
+    en_us: "Intranet traversal client (FRP-based)"
+    zh_cn: "基于 FRP 的内网穿透客户端"
   thumbnail: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
   tips:
     en_us: "Running in Host mode. Configuration is managed via Environment Variables."

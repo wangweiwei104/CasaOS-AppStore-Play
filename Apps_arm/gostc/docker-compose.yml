@@ -79,6 +79,7 @@ x-casaos:
     en_us: GOSTC
     zh_cn: GOSTC 内网穿透
   index: /
+  scheme: https
   hostname: gost.sian.one/dashboard
   port_map: ""
   is_uncontrolled: false

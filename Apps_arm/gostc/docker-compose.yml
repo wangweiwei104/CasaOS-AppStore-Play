@@ -9,17 +9,18 @@ services:
     privileged: false
     cpu_shares: 90
     
-    # 定义环境变量，赋予默认值（来自你的原配置）
     environment:
       TZ: Asia/Shanghai
+      GOST_TLS: "true"
+      GOST_ADDR: gost.sian.one
+      GOST_KEY: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxxx
     
-    # 引用环境变量来构建启动命令
     command:
-      - --tls=true
+      - --tls=${GOST_TLS}
       - -addr
-      - gost.sian.one
+      - ${GOST_ADDR}
       - -key
-      - xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxxx
+      - ${GOST_KEY}
     
     volumes: []
     deploy:
@@ -34,6 +35,18 @@ services:
           description:
             en_us: Container timezone setting
             zh_cn: 容器时区设置
+        - container: GOST_TLS
+          description:
+            en_us: Enable TLS encryption (true/false)
+            zh_cn: 启用 TLS 加密 (true/false)
+        - container: GOST_ADDR
+          description:
+            en_us: GOST Server address (e.g., gost.sian.one)
+            zh_cn: "GOST 服务器地址 (例如: gost.sian.one)"
+        - container: GOST_KEY
+          description:
+            en_us: Client authentication key (required)
+            zh_cn: 客户端认证 Key (必填)
       ports: []
       volumes: []
       tips:

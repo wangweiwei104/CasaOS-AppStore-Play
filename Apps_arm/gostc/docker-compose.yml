@@ -14,14 +14,7 @@ services:
       GOST_TLS: "true"
       GOST_ADDR: gost.sian.one
       GOST_KEY: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxxx
-    
-    command:
-      - --tls=${GOST_TLS}
-      - -addr
-      - ${GOST_ADDR}
-      - -key
-      - ${GOST_KEY}
-    
+
     volumes: []
     deploy:
       resources:

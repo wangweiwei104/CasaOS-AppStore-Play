@@ -30,8 +30,7 @@ services:
         limits:
           memory: 256M
     labels:
-      org.opencontainers.image.icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png
-    
+      org.opencontainers.image.icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/gostc/icon.png    
     x-casaos:
       envs:
         - container: TZ
@@ -45,7 +44,7 @@ services:
         - container: GOST_ADDR
           description:
             en_us: GOST Server address (e.g., gost.sian.one)
-            zh_cn: GOST 服务器地址 (例如: gost.sian.one)
+            zh_cn: "GOST 服务器地址 (例如: gost.sian.one)"
         - container: GOST_KEY
           description:
             en_us: Client authentication key (required)

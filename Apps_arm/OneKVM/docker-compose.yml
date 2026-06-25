@@ -1,21 +1,15 @@
 name: one-kvm-full-arm
 services:
   one-kvm-full:
-    cpu_shares: 90
-    command: []
     container_name: one-kvm
-    deploy:
-      resources:
-        limits:
-          memory: 981M
     hostname: one-kvm
     image: registry.cn-hangzhou.aliyuncs.com/silentwind/one-kvm-full:latest
-    labels:
-      icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/OneKVM/icon.png
-    privileged: true
     restart: unless-stopped
-    stdin_open: true
-    tty: true
+    network_mode: host
+    privileged: true
+    cpu_shares: 90
+    command: []
+    environment: {}
     volumes:
       - type: bind
         source: /dev
@@ -23,27 +17,51 @@ services:
       - type: bind
         source: /sys
         target: /sys
-    ports: []
-    devices: []
-    cap_add: []
-    environment: []
-    network_mode: host
+        read_only: true
+    deploy:
+      resources:
+        limits:
+          memory: 981M
+    labels:
+      org.opencontainers.image.icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/OneKVM/icon.png
+    stdin_open: true
+    tty: true
+    x-casaos:
+      envs: []
+      ports: []
+      volumes:
+        - container: /dev
+          description:
+            en_us: Access to hardware devices (USB/Video)
+            zh_cn: 访问硬件设备（USB/视频采集）
+        - container: /sys
+          description:
+            en_us: System information access
+            zh_cn: 系统信息访问
+
 x-casaos:
+  architectures:
+    - arm
+  main: one-kvm-full
   author: WW
   category: KVM
-  hostname: ""
   description:
-    en_us: An open and lightweight IP-KVM solution written in Rust, enabling BIOS-level remote management
-    zh_cn: Rust 编写的开放轻量 IP-KVM 解决方案，实现 BIOS 级远程管理
+    en_us: An open and lightweight IP-KVM solution written in Rust, enabling BIOS-level remote management. Requires compatible HDMI capture device and USB OTG support.
+    zh_cn: Rust 编写的开放轻量 IP-KVM 解决方案，实现 BIOS 级远程管理。需要兼容的 HDMI 采集卡和 USB OTG 支持。
+  developer: silentwind
+  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/OneKVM/icon.png
+  screenshot_link: []
   tagline:
     en_us: An open and lightweight IP-KVM
     zh_cn: 轻量 IP-KVM 解决方案
-  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/OneKVM/icon.png
-  index: /
-  is_uncontrolled: false
-  port_map: "8080"
-  scheme: http
-  store_app_id: yourprojectname
+  thumbnail: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/OneKVM/icon.png
+  tips:
+    en_us: Access via port 8080. Ensure your user has permission to access /dev/video* and /dev/hidg*. Running in Host mode.
+    zh_cn: 请访问 8080 端口。请确保当前用户有权限访问 /dev/video* 和 /dev/hidg* 设备。应用运行于 Host 网络模式。
   title:
-    custom: One-KVM
     en_us: One-KVM
+    zh_cn: One-KVM 远程控制
+  index: /
+  hostname: ""
+  port_map: "8080"
+  is_uncontrolled: false

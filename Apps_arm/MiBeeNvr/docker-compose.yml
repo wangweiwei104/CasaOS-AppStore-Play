@@ -1,0 +1,78 @@
+name: mibeenvr-arm
+services:
+  mibeenvr-arm:
+    container_name: mibeenvr-arm
+    image: ghcr.io/mi-bee-studio/mibeenvr:latest
+    platform: linux/arm/v7
+    restart: unless-stopped
+    ports:
+      - target: 9090
+        published: "9090"
+        protocol: tcp
+      - target: 1935
+        published: "1935"
+        protocol: tcp
+      - target: 9000
+        published: "9000"
+        protocol: udp
+      - target: 2121
+        published: "2121"
+        protocol: tcp
+    environment:
+      NVR_DATA_DIR: /data
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mibeenvr
+        target: /data
+    x-casaos:
+      ports:
+        - container: "9090"
+          description:
+            en_us: MiBee NVR Web UI and API
+            zh_cn: MiBee NVR Web 管理界面和 API
+        - container: "1935"
+          description:
+            en_us: RTMP stream ingest port
+            zh_cn: RTMP 流接收端口
+        - container: "9000"
+          description:
+            en_us: SRT stream ingest port
+            zh_cn: SRT 流接收端口
+          protocol: udp
+        - container: "2121"
+          description:
+            en_us: FTP port
+            zh_cn: FTP 端口
+      volumes:
+        - container: /data
+          description:
+            en_us: Recordings, database, and configuration data
+            zh_cn: 录像、数据库和配置数据
+x-casaos:
+  architectures:
+    - arm
+  main: mibeenvr-arm
+  author: Mi-Bee Studio
+  category: Home Automation
+  description:
+    en_us: A self-hosted NVR for camera monitoring, recording, and playback.
+    zh_cn: 一个用于摄像头监控、录像和回放的自托管 NVR。
+  developer: Mi-Bee Studio
+  icon: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/MiBeeNvr/icon.png
+  screenshot_link: []
+  tagline:
+    en_us: Self-hosted network video recorder
+    zh_cn: 自托管网络录像机
+  thumbnail: https://cdn.jsdelivr.net/gh/wangweiwei104/CasaOS-AppStore-Play@main/Apps_arm/MiBeeNvr/icon.png
+  tips:
+    en_us: Open port 9090 to complete the setup wizard. RTMP, SRT, and FTP ports are also exposed for camera integration.
+    zh_cn: 请访问 9090 端口完成初始化向导，同时已开放 RTMP、SRT 和 FTP 端口用于摄像头接入。
+  title:
+    en_us: MiBee NVR
+    zh_cn: MiBee NVR
+    custom: MiBee NVR
+  index: /
+  hostname: ""
+  port_map: "9090"
+  scheme: http
+  is_uncontrolled: false
